@@ -39,7 +39,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="row">
+        <div className="row mt-4">
           <div className="col-9">
             <div className="row">
               {this.state.movies.map(movie => {
@@ -58,6 +58,18 @@ class App extends React.Component {
           </div>
           <div className="col-3">
             <h3>Will Watch: <br/> {this.state.moviesWillWatch.length} movies</h3>
+            <ul class="list-group">
+              {this.state.moviesWillWatch.map(movie => {
+                return (
+                  <li class="list-group-item">
+                    <div className="d-flex justify-content-between">
+                      <div>{movie.title}</div>
+                      <div>{movie.vote_average}</div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
       </div>

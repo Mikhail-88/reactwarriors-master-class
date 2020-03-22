@@ -42,7 +42,9 @@ class MovieItem extends React.Component {
               </button>
             )}
           </div>
-          <button onClick={removeMovie.bind(null, movie)}>Delete movie</button>
+          <button className="btn btn-danger" onClick={removeMovie.bind(null, movie)}>
+            Delete movie
+          </button>
         </div>
       </div>
     );
