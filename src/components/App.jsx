@@ -1,77 +1,166 @@
 import React from "react";
-import { moviesData } from '../moviesData';
 import MovieItem from "./MovieItem";
+import { API_URL, API_KEY_3 } from '../utils/api';
+import { MovieTabs } from './MovieTabs';
+import { FavoriteMovies } from './FavoriteMovies';
+import SortButton from './SortButton';
+import Loader from './Loader';
+import Pagination from './Pagination';
+import '../css/app.css';
 
 class App extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
-      movies: moviesData,
-      moviesWillWatch: []
+      movies: [],
+      favoriteMovies: [],
+      sort_by: "popularity.desc",
+      isLoading: false,
+      page: 1,
+      totalPages: 0
     };
+
+    this.myRef = React.createRef();
   }
 
+  componentDidMount() {
+    this.getMoviesFromServer();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.sort_by !== this.state.sort_by ||
+    prevState.page !== this.state.page) {
+      this.getMoviesFromServer();
+    }
+  }
+
+  getMoviesFromServer = () => {
+    fetch(
+      `${API_URL}/discover/movie?api_key=${API_KEY_3}&sort_by=${this.state.sort_by}&page=${this.state.page}`
+    )
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        movies: data.results,
+        isLoading: true,
+        totalPages: data.total_pages,
+      })
+    })
+    .catch(error => {
+      alert(`Something wrong... ${error}`)
+      console.log(error)
+    })
+  }
+
+  changePage = value => {
+    if (value > 0 && value <= this.state.totalPages) {
+      this.setState({
+        page: value,
+      });
+    }
+  };
+  
   removeMovie = movie => {
-    const updateMovie = this.state.movies.filter(item => item.id !== movie.id);
+    const updateMovies = this.state.movies.filter(item => item.id !== movie.id);
 
     this.setState({
-      movies: updateMovie
+      movies: updateMovies
     });
   }
 
-  addMovieToWillWatch = movie => {
-    const updateMovieWillWatch = [...this.state.moviesWillWatch, movie];
+  addToFavorite = movie => {
+    const updateFavoriteMovies = [...this.state.favoriteMovies, movie];
 
     this.setState({
-      moviesWillWatch: updateMovieWillWatch
+      favoriteMovies: updateFavoriteMovies
     });
   }
 
-  removeMovieFromWillWatch = movie => {
-    const updateMovieWillWatch = this.state.moviesWillWatch.filter(item => item.id !== movie.id);
+  removeFromFavorite = movie => {
+    const updateFavoriteMovies = this.state.favoriteMovies.filter(item => item.id !== movie.id);
 
     this.setState({
-      moviesWillWatch: updateMovieWillWatch
+      favoriteMovies: updateFavoriteMovies
     });
+  }
+
+  sortByRate = () => {
+    this.setState(prevState => ({
+      movies: [...prevState.movies].sort((a, b) => b.vote_average - a.vote_average),
+    }));
+  }
+
+  sortByReverseRate = () => {
+    this.setState(prevState => ({
+      movies: [...prevState.movies].sort((a, b) => a.vote_average - b.vote_average),
+    }));
+  }
+
+  updateSortBy = value => {
+    this.setState({
+      sort_by: value,
+      page: 1,
+    });
+  }
+
+  scrollTop = () => {
+    this.myRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   render() {
+    const { movies, favoriteMovies, sort_by, page, totalPages, isLoading } = this.state;
+
     return (
-      <div className="container">
+      <div className="container" ref={this.myRef}>
         <div className="row mt-4">
           <div className="col-9">
+            <div className="row mb-4">
+             <div className="col-9">
+              <MovieTabs 
+                sort_by={sort_by} 
+                updateSortBy={this.updateSortBy} 
+              />
+             </div>
+              <SortButton 
+                sortByRate={this.sortByRate} 
+                sortByReverseRate={this.sortByReverseRate} 
+              />
+            </div>
+            <div className="row justify-content-center">
+              <Pagination
+                page={page}
+                totalPages={totalPages}
+                changePage={this.changePage}
+              />
+            </div>
             <div className="row">
-              {this.state.movies.map(movie => {
-                return (
+              {isLoading ? (
+                movies.map(movie => (
                   <div className="col-6 mb-4" key={movie.id}>
                     <MovieItem
                       movie={movie}
                       removeMovie={this.removeMovie}
-                      addMovieToWillWatch={this.addMovieToWillWatch}
-                      removeMovieFromWillWatch={this.removeMovieFromWillWatch}
+                      addToFavorite={this.addToFavorite}
+                      removeFromFavorite={this.removeFromFavorite}
                     />
                   </div>
-                );
-              })}
+                ))
+               ) : (
+                <Loader />
+              )}
             </div>
           </div>
-          <div className="col-3">
-            <h3>Will Watch: <br/> {this.state.moviesWillWatch.length} movies</h3>
-            <ul class="list-group">
-              {this.state.moviesWillWatch.map(movie => {
-                return (
-                  <li class="list-group-item">
-                    <div className="d-flex justify-content-between">
-                      <div>{movie.title}</div>
-                      <div>{movie.vote_average}</div>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          <FavoriteMovies favoriteMovies={favoriteMovies} />
         </div>
+        <button 
+          type="button" 
+          className="button__top" 
+          onClick={this.scrollTop}
+          title="Go to top"
+        >
+          Top
+        </button>
       </div>
     );
   }
