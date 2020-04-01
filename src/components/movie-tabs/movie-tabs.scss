@@ -1,0 +1,20 @@
+.nav-link {
+  background: linear-gradient(60deg, rgba(111, 199, 234, 1) 0%,
+      rgba(55, 184, 203, 1) 100%);
+  margin-right: 15px;
+  border: 3px solid transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: linear-gradient(60deg, rgb(42, 186, 243) 0%,
+        rgb(15, 77, 87) 100%);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.nav-link.active {
+  font-weight: bold;
+}

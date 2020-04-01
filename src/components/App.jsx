@@ -1,12 +1,13 @@
 import React from "react";
-import MovieItem from "./MovieItem";
+import MovieItem from './movie-item/movie-item';
 import { API_URL, API_KEY_3 } from '../utils/api';
-import { MovieTabs } from './MovieTabs';
-import { FavoriteMovies } from './FavoriteMovies';
-import SortButton from './SortButton';
-import Loader from './Loader';
-import Pagination from './Pagination';
-import '../css/app.css';
+import { MovieTabs } from './movie-tabs/movie-tabs';
+import { FavoriteMovies } from './favorite/favorite-movies';
+import SortButton from './sort-button/sort-button';
+import Loader from './loader/loader';
+import Pagination from './pagination/pagination';
+import SearchPanel from './search-panel/search-panel';
+import './app.scss';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class App extends React.Component {
       sort_by: "popularity.desc",
       isLoading: false,
       page: 1,
-      totalPages: 0
+      totalPages: 0,
+      searchText: ''
     };
 
     this.myRef = React.createRef();
@@ -108,14 +110,34 @@ class App extends React.Component {
     this.myRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  searchMovie = (movies, searchText) => {
+    if (searchText.length === 0) {
+      return movies;
+    }
+
+    return movies.filter(movie => movie.title
+      .toLowerCase()
+      .includes(searchText.toLowerCase().trim()));
+  }
+
+  updateSearch = (searchText) => {
+    this.setState({searchText});
+  }
+
   render() {
-    const { movies, favoriteMovies, sort_by, page, totalPages, isLoading } = this.state;
+    const { movies, favoriteMovies, sort_by, page, totalPages, isLoading, searchText } = this.state;
+    const visibleMovies = this.searchMovie(movies, searchText);
 
     return (
       <div className="container" ref={this.myRef}>
-        <div className="row mt-4">
-          <div className="col-9">
-            <div className="row mb-4">
+        <div className="row mt-4 wrapper">
+          <div className="col-9 content">
+          <div className="mb-3">
+            <SearchPanel 
+              updateSearch={this.updateSearch} 
+            />
+          </div>
+            <div className="row mb-4 navigation">
              <div className="col-9">
               <MovieTabs 
                 sort_by={sort_by} 
@@ -134,10 +156,10 @@ class App extends React.Component {
                 changePage={this.changePage}
               />
             </div>
-            <div className="row">
+            <div className="row card_container">
               {isLoading ? (
-                movies.map(movie => (
-                  <div className="col-6 mb-4" key={movie.id}>
+                visibleMovies.map(movie => (
+                  <div className="col-6 mb-4 card_wrapper" key={movie.id}>
                     <MovieItem
                       movie={movie}
                       removeMovie={this.removeMovie}

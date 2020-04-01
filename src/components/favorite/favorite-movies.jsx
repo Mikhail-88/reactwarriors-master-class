@@ -1,6 +1,6 @@
 import React from 'react';
-import '../css/favorite.css';
-  
+import './favorite.scss';
+
 export const FavoriteMovies = ({ favoriteMovies }) => {
 
   return (

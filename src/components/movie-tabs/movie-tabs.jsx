@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import '../css/movieTabs.css';
+import './movie-tabs.scss';
 
 export const MovieTabs = ({ sort_by, updateSortBy }) => {
   const handleClick = value => {
@@ -8,8 +8,8 @@ export const MovieTabs = ({ sort_by, updateSortBy }) => {
   };
 
   const getClassLink = value => {
-    const bool = sort_by === value;
-    return cn('nav-link', {'active': bool});
+    const isActiveClass = sort_by === value;
+    return cn('nav-link', {'active': isActiveClass});
   }
 
   return (

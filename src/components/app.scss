@@ -1,0 +1,114 @@
+body {
+  background-image: url(https://lionsdigest1.com/wp-content/uploads/2020/02/2019movies-900x789.jpg);
+}
+
+h3 {
+  color: #069eb6;
+  font-weight: bold;
+}
+
+.container {
+  font-family: "Lato", sans-serif;
+  overflow: hidden;
+  background: linear-gradient(60deg, rgb(133, 231, 199) 0%,
+      rgb(124, 187, 173) 80%);
+}
+
+.loader {
+  margin: auto;
+}
+
+.button__top {
+  font-size: 18px;
+  outline: none;
+  padding: 12px;
+  opacity: 0.6;
+  cursor: pointer;
+  color: #0075ff;
+  background: #eee;
+  border: 2px solid #0075ff;
+  border-radius: 5px;
+  position: fixed;
+  bottom: 50px;
+  right: 21%;
+  z-index: 3;
+  transition: all 0.5s ease;
+
+  &:hover {
+    color: #eee;
+    background: #0075ff;
+    opacity: 1;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 1000px) {
+  .card_container {
+    flex-direction: column;
+    align-items: center;
+
+    .card_wrapper {
+      max-width: 80%;
+    }
+  }
+
+  .container {
+    .navigation {
+      .col-9 {
+        margin: auto;
+      }
+
+      .nav {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .nav-item {
+          margin-bottom: 10px;
+          width: 170px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 770px) {
+  .container {
+    .wrapper {
+      margin: auto;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .content {
+        min-width: 100%;
+        margin-right: 50px;
+      }
+
+      .favorite {
+        margin: 20px;
+        min-width: 310px;
+      }
+    }
+  }
+
+  .card_container {
+    .card_wrapper {
+      max-width: 100%;
+    }
+  }
+
+  .button__top {
+    right: 10%;
+  }
+}
+
+@media (max-width: 590px) {
+  .button__top {
+    right: 5%;
+  }
+}
