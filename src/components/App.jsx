@@ -7,6 +7,7 @@ import SortButton from './sort-button/sort-button';
 import Loader from './loader/loader';
 import Pagination from './pagination/pagination';
 import SearchPanel from './search-panel/search-panel';
+import { NotFoundMovie } from './nothing-search/nothing-search';
 import './app.scss';
 
 class App extends React.Component {
@@ -157,6 +158,7 @@ class App extends React.Component {
               />
             </div>
             <div className="row card_container">
+              {!visibleMovies.length && <NotFoundMovie />}
               {isLoading ? (
                 visibleMovies.map(movie => (
                   <div className="col-6 mb-4 card_wrapper" key={movie.id}>
@@ -168,9 +170,7 @@ class App extends React.Component {
                     />
                   </div>
                 ))
-               ) : (
-                <Loader />
-              )}
+               ) : <Loader />}
             </div>
           </div>
           <FavoriteMovies favoriteMovies={favoriteMovies} />

@@ -32,29 +32,32 @@ const Pagination = ({ page, totalPages, changePage }) => {
   const pageButtons = creatButtons(page, totalPages);
   
   return (
-    <ul className="pagination">
-      <li 
+    <div className="pagination">
+      <button
+        disabled={page === 1 ? 'disabled' : ''}
         className="pagination__button" 
         onClick={() => changePage(page - 1)}
       >
         &laquo;
-      </li>
+      </button>
       {pageButtons.map(value => (
-        <li
+        <button
+          disabled={value === separate ? 'disabled' : ''}
           className={getClassLink(value)}
           key={randomstring.generate(5)}
           onClick={() => changePage(value)}
         >
           {value}
-        </li>
+        </button>
       ))}
-      <li 
+      <button
+        disabled={page === totalPages ? 'disabled' : ''}
         className="pagination__button" 
         onClick={() => changePage(page + 1)}
       >
         &raquo;
-      </li>
-    </ul>
+      </button>
+    </div>
   );
 };
 
