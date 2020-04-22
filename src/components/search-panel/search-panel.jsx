@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import debounce from 'lodash/debounce';
+import PropTypes from 'prop-types';
 
 const SearchPanel = ({ updateSearch }) => {
   const [searchText, setSearchText] = useState('');
@@ -21,6 +22,10 @@ const SearchPanel = ({ updateSearch }) => {
       onChange={onUpdateSearch}
     />
   );
+};
+
+SearchPanel.propTypes = {
+  updateSearch: PropTypes.func.isRequired
 };
 
 export default SearchPanel;

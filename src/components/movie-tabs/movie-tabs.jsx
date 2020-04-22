@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
+
 import './movie-tabs.scss';
 
 export const MovieTabs = ({ sort_by, updateSortBy }) => {
@@ -40,5 +42,10 @@ export const MovieTabs = ({ sort_by, updateSortBy }) => {
         </button>
       </li>
     </ul>
-  )
+  );
+};
+
+MovieTabs.propTypes = {
+  sort_by: PropTypes.string.isRequired,
+  updateSortBy: PropTypes.func.isRequired
 };

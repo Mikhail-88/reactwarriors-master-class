@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import './movie-item.scss';
 
 class MovieItem extends Component {
@@ -31,7 +33,7 @@ class MovieItem extends Component {
         favorite: false
       });
       this.props.removeFromFavorite(movie);
-    }
+    };
   }
 
   handleClickAdd = (movie) => {
@@ -40,7 +42,7 @@ class MovieItem extends Component {
         favorite: true
       });
       this.props.addToFavorite(movie);
-    }
+    };
   }
  
   render() {
@@ -87,7 +89,14 @@ class MovieItem extends Component {
         </div>
       </div>
     );
-  }
-}
+  };
+};
+
+MovieItem.propTypes = {
+  movie: PropTypes.object.isRequired,
+  removeMovie: PropTypes.func.isRequired,
+  addToFavorite: PropTypes.func.isRequired,
+  removeFromFavorite: PropTypes.func.isRequired
+};
 
 export default MovieItem;

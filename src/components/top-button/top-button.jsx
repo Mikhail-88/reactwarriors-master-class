@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './top-button.scss';
 
 const TopButton = ({ scrollTop }) => (
@@ -11,5 +13,9 @@ const TopButton = ({ scrollTop }) => (
     Top
   </button>
 );
+
+TopButton.propTypes = {
+  scrollTop: PropTypes.func.isRequired
+};
 
 export default TopButton;

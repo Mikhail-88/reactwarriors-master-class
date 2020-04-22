@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import './sort-button.scss';
 
 class SortButton extends Component {
@@ -10,8 +12,25 @@ class SortButton extends Component {
     };
   }
 
+  handleSortByRate = () => {
+    return () => {
+      this.setState({
+        rateUp: false
+      });
+      this.props.sortByRate();
+    };
+  }
+
+  handleSortByReverseRate = () => {
+    return () => {
+      this.setState({
+        rateUp: true
+      });
+      this.props.sortByReverseRate();
+    };
+  }
+
   render() {
-    const { sortByRate, sortByReverseRate } = this.props;
     const { rateUp } = this.state;
 
     return (
@@ -21,12 +40,7 @@ class SortButton extends Component {
             type="button"
             title="Sort by Rate Up"
             className="btn btn-secondary sort-button" 
-            onClick={() => {
-              this.setState({
-                rateUp: false
-              });
-              sortByRate();
-            }}
+            onClick={this.handleSortByRate()}
           >
             &uArr;
           </button>
@@ -35,19 +49,19 @@ class SortButton extends Component {
             type="button"
             title="Sort by Rate Down"
             className="btn btn-secondary sort-button" 
-            onClick={() => {
-              this.setState({
-                rateUp: true
-              });
-              sortByReverseRate();
-            }}
+            onClick={this.handleSortByReverseRate()}
           >
             &dArr;
           </button>
         )}
       </div>     
     );
-  }
-}
+  };
+};
+
+SortButton.propTypes = {
+  sortByRate: PropTypes.func.isRequired,
+  sortByReverseRate: PropTypes.func.isRequired
+};
 
 export default SortButton;

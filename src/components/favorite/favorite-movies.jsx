@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './favorite.scss';
 
 export const FavoriteMovies = ({ favoriteMovies }) => {
@@ -19,5 +21,11 @@ export const FavoriteMovies = ({ favoriteMovies }) => {
         })}
       </ul>
     </div>
-  )
+  );
+};
+
+FavoriteMovies.propTypes = {
+  favoriteMovies: PropTypes.arrayOf(
+    PropTypes.object
+  ).isRequired,
 };
