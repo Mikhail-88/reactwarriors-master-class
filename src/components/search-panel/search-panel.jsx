@@ -1,30 +1,26 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback } from 'react';
+import debounce from 'lodash/debounce';
 
-class SearchPanel extends Component {
-  constructor(props) {
-    super(props);
+const SearchPanel = ({ updateSearch }) => {
+  const [searchText, setSearchText] = useState('');
 
-    this.state = {
-      searchText: ''
-    }
+  const updateSearchWithDebounce = useCallback(debounce(updateSearch, 1000), []);
+
+  const onUpdateSearch = ({ target }) => {
+    setSearchText(target.value);
+
+    updateSearchWithDebounce(searchText);
   }
 
-  onUpdateSearch = ({ target }) => {
-    const searchText = target.value;
-    this.setState({searchText});
-    this.props.updateSearch(searchText);
-  }
-
-  render() {
-    return (
-      <input
-        className="form-control"
-        type="text"
-        placeholder="Search movies"
-        onChange={this.onUpdateSearch}
-      />
-    )
-  }
-}
+  return (
+    <input
+      className="form-control"
+      type="text"
+      value={searchText}
+      placeholder="Search movies"
+      onChange={onUpdateSearch}
+    />
+  );
+};
 
 export default SearchPanel;

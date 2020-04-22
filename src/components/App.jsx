@@ -1,16 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 import MovieItem from './movie-item/movie-item';
 import { API_URL, API_KEY_3 } from '../utils/api';
 import { MovieTabs } from './movie-tabs/movie-tabs';
 import { FavoriteMovies } from './favorite/favorite-movies';
 import SortButton from './sort-button/sort-button';
+import TopButton from './top-button/top-button';
 import Loader from './loader/loader';
 import Pagination from './pagination/pagination';
 import SearchPanel from './search-panel/search-panel';
 import { NotFoundMovie } from './nothing-search/nothing-search';
+import ErrorMessage from '../components/error-message/error-message';
+
 import './app.scss';
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props)
 
@@ -18,7 +21,8 @@ class App extends React.Component {
       movies: [],
       favoriteMovies: [],
       sort_by: "popularity.desc",
-      isLoading: false,
+      isLoading: true,
+      isError: false,
       page: 1,
       totalPages: 0,
       searchText: ''
@@ -38,6 +42,12 @@ class App extends React.Component {
     }
   }
 
+  componentDidCatch() {
+    this.setState({
+      isError: true,
+    }); 
+  }
+
   getMoviesFromServer = () => {
     fetch(
       `${API_URL}/discover/movie?api_key=${API_KEY_3}&sort_by=${this.state.sort_by}&page=${this.state.page}`
@@ -46,13 +56,16 @@ class App extends React.Component {
     .then(data => {
       this.setState({
         movies: data.results,
-        isLoading: true,
+        isLoading: false,
+        isError: false,
         totalPages: data.total_pages,
-      })
+      });
     })
-    .catch(error => {
-      alert(`Something wrong... ${error}`)
-      console.log(error)
+    .catch(() => {
+      this.setState({
+        isError: true,
+        isLoading: false,
+      });
     })
   }
 
@@ -60,6 +73,7 @@ class App extends React.Component {
     if (value > 0 && value <= this.state.totalPages) {
       this.setState({
         page: value,
+        isLoading: true
       });
     }
   };
@@ -102,17 +116,19 @@ class App extends React.Component {
 
   updateSortBy = value => {
     this.setState({
+      isLoading: true,
       sort_by: value,
       page: 1,
     });
   }
 
   scrollTop = () => {
-    this.myRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    this.myRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   searchMovie = (movies, searchText) => {
-    if (searchText.length === 0) {
+    if (searchText.length < 2) {
+  
       return movies;
     }
 
@@ -126,8 +142,10 @@ class App extends React.Component {
   }
 
   render() {
-    const { movies, favoriteMovies, sort_by, page, totalPages, isLoading, searchText } = this.state;
+    const { movies, favoriteMovies, sort_by, page, totalPages, isLoading, isError, searchText } = this.state;
     const visibleMovies = this.searchMovie(movies, searchText);
+    const errorMessage = isError && <ErrorMessage />;
+    const loading = isLoading && <Loader />;
 
     return (
       <div className="container" ref={this.myRef}>
@@ -158,34 +176,28 @@ class App extends React.Component {
               />
             </div>
             <div className="row card_container">
-              {!visibleMovies.length && <NotFoundMovie />}
-              {isLoading ? (
-                visibleMovies.map(movie => (
-                  <div className="col-6 mb-4 card_wrapper" key={movie.id}>
-                    <MovieItem
-                      movie={movie}
-                      removeMovie={this.removeMovie}
-                      addToFavorite={this.addToFavorite}
-                      removeFromFavorite={this.removeFromFavorite}
-                    />
-                  </div>
-                ))
-               ) : <Loader />}
+              {errorMessage || loading || (!visibleMovies.length && <NotFoundMovie />) ||
+                (
+                  visibleMovies.map(movie => (
+                    <div className="col-6 mb-4 card_wrapper" key={movie.id}>
+                      <MovieItem
+                        movie={movie}
+                        removeMovie={this.removeMovie}
+                        addToFavorite={this.addToFavorite}
+                        removeFromFavorite={this.removeFromFavorite}
+                      />
+                    </div>
+                  ))
+                )
+              }
             </div>
           </div>
           <FavoriteMovies favoriteMovies={favoriteMovies} />
         </div>
-        <button 
-          type="button" 
-          className="button__top" 
-          onClick={this.scrollTop}
-          title="Go to top"
-        >
-          Top
-        </button>
+        <TopButton scrollTop={this.scrollTop} />
       </div>
     );
-  }
-}
+  };
+};
 
 export default App;

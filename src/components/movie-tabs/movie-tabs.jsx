@@ -9,34 +9,35 @@ export const MovieTabs = ({ sort_by, updateSortBy }) => {
 
   const getClassLink = value => {
     const isActiveClass = sort_by === value;
-    return cn('nav-link', {'active': isActiveClass});
+    
+    return cn('btn btn-info', {'active': isActiveClass});
   }
 
   return (
     <ul className="tabs nav nav-pills">
-      <li className="nav-item">
-        <div 
+      <li className="nav-item m-1">
+        <button 
           className={getClassLink("popularity.desc")}
           onClick={handleClick("popularity.desc")}
         >
         Popularity
-        </div>
+        </button>
       </li>
-      <li className="nav-item">
-        <div 
+      <li className="nav-item m-1">
+        <button 
           className={getClassLink("revenue.desc")}
           onClick={handleClick("revenue.desc")}
         >
         Revenue
-        </div>
+        </button>
       </li>
-      <li className="nav-item">
-        <div 
+      <li className="nav-item m-1">
+        <button 
           className={getClassLink("vote_average.desc")}
           onClick={handleClick("vote_average.desc")}
         >
           Vote average
-        </div>
+        </button>
       </li>
     </ul>
   )

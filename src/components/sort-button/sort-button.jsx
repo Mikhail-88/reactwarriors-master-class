@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './sort-button.scss';
 
 class SortButton extends Component {
   constructor(props) {
@@ -17,8 +18,9 @@ class SortButton extends Component {
       <div className="col align-self-center text-right">
         {rateUp ? (
           <button 
-            type="button" 
-            className="btn btn-primary" 
+            type="button"
+            title="Sort by Rate Up"
+            className="btn btn-secondary sort-button" 
             onClick={() => {
               this.setState({
                 rateUp: false
@@ -26,12 +28,13 @@ class SortButton extends Component {
               sortByRate();
             }}
           >
-            Highest rating
+            &uArr;
           </button>
           ) : (
           <button 
-            type="button" 
-            className="btn btn-primary" 
+            type="button"
+            title="Sort by Rate Down"
+            className="btn btn-secondary sort-button" 
             onClick={() => {
               this.setState({
                 rateUp: true
@@ -39,7 +42,7 @@ class SortButton extends Component {
               sortByReverseRate();
             }}
           >
-            Lowest rating
+            &dArr;
           </button>
         )}
       </div>     

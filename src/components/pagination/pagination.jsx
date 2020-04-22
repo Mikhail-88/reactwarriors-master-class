@@ -26,6 +26,7 @@ const Pagination = ({ page, totalPages, changePage }) => {
 
   const getClassLink = value => {
     const isActiveClass = page === value;
+    
     return cn('pagination__button', {'pagination__button--active': isActiveClass});
   }
 
