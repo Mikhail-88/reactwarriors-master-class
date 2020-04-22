@@ -1,5 +1,7 @@
 ## Мастер-класс. Первое приложение на ReactJS
 
+You can find my code on the develop branch.
+
 My Solution:
 - [DEMO-LINK](https://mikhail-88.github.io/reactwarriors-master-class/)
 
