@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import './sort-button.scss';
 
-class SortButton extends Component {
+class SortButton extends PureComponent {
   constructor(props) {
     super(props);
 

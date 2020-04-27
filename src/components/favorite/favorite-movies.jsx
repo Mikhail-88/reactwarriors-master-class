@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './favorite.scss';
 
-export const FavoriteMovies = ({ favoriteMovies }) => {
+const FavoriteMovies = ({ favoriteMovies }) => {
 
   return (
     <div className="col-3 favorite">
@@ -23,6 +23,10 @@ export const FavoriteMovies = ({ favoriteMovies }) => {
     </div>
   );
 };
+
+const FavoriteMoviesWithMemo = React.memo(FavoriteMovies);
+
+export default FavoriteMoviesWithMemo;
 
 FavoriteMovies.propTypes = {
   favoriteMovies: PropTypes.arrayOf(

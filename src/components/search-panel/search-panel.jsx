@@ -24,8 +24,10 @@ const SearchPanel = ({ updateSearch }) => {
   );
 };
 
+const SearchPanelWithMemo = React.memo(SearchPanel);
+
 SearchPanel.propTypes = {
   updateSearch: PropTypes.func.isRequired
 };
 
-export default SearchPanel;
+export default SearchPanelWithMemo;

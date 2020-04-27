@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import './top-button.scss';
 
-const TopButton = ({ scrollTop }) => (
+const TopButton = ({ scrollTop }) => {
+
+  return (
   <button 
     type="button" 
     className="button__top" 
@@ -11,11 +13,13 @@ const TopButton = ({ scrollTop }) => (
     title="Go to top"
   >
     Top
-  </button>
-);
+  </button>)
+};
 
 TopButton.propTypes = {
   scrollTop: PropTypes.func.isRequired
 };
 
-export default TopButton;
+const TopButtonWithMemo = React.memo(TopButton);
+
+export default TopButtonWithMemo;

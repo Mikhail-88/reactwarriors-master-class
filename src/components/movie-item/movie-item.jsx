@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import './movie-item.scss';
 
-class MovieItem extends Component {
+class MovieItem extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -48,7 +48,7 @@ class MovieItem extends Component {
   render() {
     const { movie, removeMovie } = this.props;
     const { favorite } = this.state;
-    
+  
     return (
       <div className="card">
         <img

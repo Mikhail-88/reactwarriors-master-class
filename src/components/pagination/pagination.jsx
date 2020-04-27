@@ -64,10 +64,12 @@ const Pagination = ({ page, totalPages, changePage }) => {
   );
 };
 
+const PaginationWithMemo = React.memo(Pagination);
+
 Pagination.propTypes = {
   page: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   changePage: PropTypes.func.isRequired
 };
 
-export default Pagination;
+export default PaginationWithMemo;

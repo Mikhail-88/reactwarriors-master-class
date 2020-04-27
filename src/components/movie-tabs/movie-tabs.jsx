@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import './movie-tabs.scss';
 
-export const MovieTabs = ({ sort_by, updateSortBy }) => {
+const MovieTabs = ({ sort_by, updateSortBy }) => {
   const handleClick = value => {
     return () => updateSortBy(value)
   };
@@ -44,6 +44,10 @@ export const MovieTabs = ({ sort_by, updateSortBy }) => {
     </ul>
   );
 };
+
+const MovieTabsWithMemo = React.memo(MovieTabs);
+
+export default MovieTabsWithMemo;
 
 MovieTabs.propTypes = {
   sort_by: PropTypes.string.isRequired,

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import MovieItem from './movie-item/movie-item';
 import { API_URL, API_KEY_3 } from '../utils/api';
-import { MovieTabs } from './movie-tabs/movie-tabs';
-import { FavoriteMovies } from './favorite/favorite-movies';
+import MovieTabsWithMemo from './movie-tabs/movie-tabs';
+import FavoriteMoviesWithMemo from './favorite/favorite-movies';
 import SortButton from './sort-button/sort-button';
-import TopButton from './top-button/top-button';
+import TopButtonWithMemo from './top-button/top-button';
 import Loader from './loader/loader';
-import Pagination from './pagination/pagination';
-import SearchPanel from './search-panel/search-panel';
+import PaginationWithMemo from './pagination/pagination';
+import SearchPanelWithMemo from './search-panel/search-panel';
 import { NotFoundMovie } from './nothing-search/nothing-search';
 import ErrorMessage from '../components/error-message/error-message';
 
@@ -152,13 +152,13 @@ class App extends Component {
         <div className="row mt-4 wrapper">
           <div className="col-9 content">
           <div className="mb-3">
-            <SearchPanel 
+            <SearchPanelWithMemo 
               updateSearch={this.updateSearch} 
             />
           </div>
             <div className="row mb-4 navigation">
              <div className="col-9">
-              <MovieTabs 
+              <MovieTabsWithMemo 
                 sort_by={sort_by} 
                 updateSortBy={this.updateSortBy} 
               />
@@ -169,7 +169,7 @@ class App extends Component {
               />
             </div>
             <div className="row justify-content-center">
-              <Pagination
+              <PaginationWithMemo
                 page={page}
                 totalPages={totalPages}
                 changePage={this.changePage}
@@ -192,9 +192,9 @@ class App extends Component {
               }
             </div>
           </div>
-          <FavoriteMovies favoriteMovies={favoriteMovies} />
+          <FavoriteMoviesWithMemo favoriteMovies={favoriteMovies} />
         </div>
-        <TopButton scrollTop={this.scrollTop} />
+        <TopButtonWithMemo scrollTop={this.scrollTop} />
       </div>
     );
   };
