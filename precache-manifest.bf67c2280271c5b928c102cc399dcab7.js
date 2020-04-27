@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "4f91db1422d379dc3569",
+    "revision": "6bf2f7664126512808a6",
     "url": "/reactwarriors-master-class/static/css/main.8f5ca1c7.chunk.css"
   },
   {
-    "revision": "4f91db1422d379dc3569",
-    "url": "/reactwarriors-master-class/static/js/main.0579e1cf.chunk.js"
+    "revision": "6bf2f7664126512808a6",
+    "url": "/reactwarriors-master-class/static/js/main.ee92593d.chunk.js"
   },
   {
     "revision": "c34383b7bf6601d1b35d",
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/reactwarriors-master-class/static/js/2.b0e34074.chunk.js"
   },
   {
-    "revision": "e1038a0e5a871fdd0c6852488caf929e",
+    "revision": "2ea95543b7c1eea0a0cd30901a08151f",
     "url": "/reactwarriors-master-class/index.html"
   }
 ];
